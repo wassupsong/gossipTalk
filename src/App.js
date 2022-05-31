@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "Fbase";
 import Spinner from "react-bootstrap/Spinner";
@@ -18,9 +18,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthData(user);
-        setIsLogin(true);
       } else {
-        setIsLogin(false);
         localStorage.removeItem("userData");
       }
       setInit(true);
@@ -31,19 +29,24 @@ function App() {
     };
   }, []);
 
+  const mounted = useRef(false);
   useEffect(() => {
-    if (isLogin) {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
       const data = doc(firebaseStore, "userData", authData.uid);
       onSnapshot(data, (doc) => {
         if (doc.data()) {
+          setIsLogin(true);
           localStorage.setItem("userData", JSON.stringify(doc.data()));
           setIsGetUserData("existData");
         } else {
+          setIsLogin(false);
           setIsGetUserData("noData");
         }
       });
     }
-  }, [isLogin]);
+  }, [authData]);
 
   const sizeCheck = () => {
     const width = window.innerWidth;
@@ -66,8 +69,18 @@ function App() {
               authData={authData}
             />
           ) : (
-            <div>
+            <div
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                textAlign: "center",
+                marginTop: "100px",
+              }}
+            >
               <h1>뒷담을 위해 화면을 작게해주세요.</h1>
+              <footer style={{ marginTop: "100px" }}>
+                &copy; {new Date().getFullYear()} gossipTalk
+              </footer>
             </div>
           )}
         </>

@@ -16,6 +16,8 @@ import {
 } from "firebase/firestore";
 
 const FriendList = () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
   const [showDetail, setShowDetail] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
@@ -25,7 +27,7 @@ const FriendList = () => {
   const [showChat, setShowChat] = useState(false);
   const [roomId, setRoomId] = useState("");
   const [receiveMs, setReceiveMs] = useState([]);
-  const userData = JSON.parse(localStorage.getItem("userData"));
+
   const myProfileEvent = () => {
     setUserName(userData.name);
     setUserPhoto(userData.photoUrl);

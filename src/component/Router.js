@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Home_Nav from "routes/Home_Navigation";
 import FriendList from "routes/FriendList";
