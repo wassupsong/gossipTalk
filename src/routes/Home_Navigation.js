@@ -27,7 +27,7 @@ const Home_Nav = () => {
   const clickLogOut = () => {
     const auth = getAuth();
     signOut(auth);
-    window.location.replace("/");
+    window.location.replace("/gossipTalk");
   };
   const moveToTab = (e) => {
     const {

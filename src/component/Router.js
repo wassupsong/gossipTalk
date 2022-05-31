@@ -15,31 +15,32 @@ const AppRouter = ({ isLogin, isGetUserData, authData }) => {
   return (
     <Router>
       {isLogin && isGetUserData == "existData" && <Home_Nav />}
-      {isGetUserData == "noInit" && isLogin && (
+      {isGetUserData == "noInit" ? (
         <div className="spinner">
           <Spinner animation="border" role="status" variant="light" />
         </div>
-      )}
-      <Routes>
-        {isLogin ? (
-          <>
-            {isGetUserData == "noData" ? (
-              <Route path="/" element={<Profile authData={authData} />} />
-            ) : (
-              <Route path="/" element={<FriendList />} />
-            )}
+      ) : (
+        <Routes>
+          {isLogin ? (
+            <>
+              {isGetUserData == "noData" ? (
+                <Route path="/" element={<Profile authData={authData} />} />
+              ) : (
+                <Route path="/" element={<FriendList />} />
+              )}
 
-            <Route path="/chatList" element={<ChatList />} />
-            <Route path="/chatRoom/:id" element={<ChatRoom />} />
-            <Route path="/etc" element={<Etc />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/search" element={<FriendsSearch />} />
-            <Route path="/profile_edit" element={<Profile_edit />} />
-          </>
-        ) : (
-          <Route path="/" element={<LoginForm />} />
-        )}
-      </Routes>
+              <Route path="/chatList" element={<ChatList />} />
+              <Route path="/chatRoom/:id" element={<ChatRoom />} />
+              <Route path="/etc" element={<Etc />} />
+              <Route path="/setting" element={<Setting />} />
+              <Route path="/search" element={<FriendsSearch />} />
+              <Route path="/profile_edit" element={<Profile_edit />} />
+            </>
+          ) : (
+            <Route path="/" element={<LoginForm />} />
+          )}
+        </Routes>
+      )}
     </Router>
   );
 };

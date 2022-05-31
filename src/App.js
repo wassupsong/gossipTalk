@@ -12,14 +12,27 @@ function App() {
   const [isMobileSize, setIsMobileSize] = useState(false);
   const [isGetUserData, setIsGetUserData] = useState("noInit");
   const [authData, setAuthData] = useState({});
+  console.log(isLogin);
+  console.log(isGetUserData);
   useEffect(() => {
     sizeCheck();
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthData(user);
+        const data = doc(firebaseStore, "userData", user.uid);
+        setIsLogin(true);
+        onSnapshot(data, (doc) => {
+          if (doc.data()) {
+            localStorage.setItem("userData", JSON.stringify(doc.data()));
+            setIsGetUserData("existData");
+          } else {
+            setIsGetUserData("noData");
+          }
+        });
       } else {
         localStorage.removeItem("userData");
+        setIsLogin(false);
       }
       setInit(true);
     });
@@ -34,17 +47,6 @@ function App() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      const data = doc(firebaseStore, "userData", authData.uid);
-      onSnapshot(data, (doc) => {
-        if (doc.data()) {
-          setIsLogin(true);
-          localStorage.setItem("userData", JSON.stringify(doc.data()));
-          setIsGetUserData("existData");
-        } else {
-          setIsLogin(false);
-          setIsGetUserData("noData");
-        }
-      });
     }
   }, [authData]);
 
