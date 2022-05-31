@@ -1,9 +1,20 @@
 import { Button, Col, Image, Modal, Row } from "react-bootstrap";
 import { FaComment, FaPen, FaUserPlus } from "react-icons/fa";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { firebaseStore } from "Fbase";
 import defaultUserIcon from "icon/abstract-user-flat-3.png";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+
 const FriendList_profile = ({
   show,
   userName,
@@ -13,9 +24,11 @@ const FriendList_profile = ({
   onHide,
   isFriends,
   myUid,
-  userData,
   setShowChat,
+  setRoomId,
+  setReceiveMs,
 }) => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
   const addFriends = async () => {
     const my = doc(firebaseStore, "userData", myUid);
@@ -33,10 +46,51 @@ const FriendList_profile = ({
       console.log(error.message);
     }
   };
-  const startChat = () => {
+  const startChat = async () => {
+    const getRoomId = await getDoc(doc(firebaseStore, userData.uid, userUid));
+    let roomId = null;
+    if (getRoomId.exists()) {
+      setRoomId(getRoomId.data().UUid);
+      roomId = getRoomId.data().UUid;
+    } else {
+      const uuid = uuidv4();
+      setRoomUUid(uuid);
+      setRoomId(uuid);
+      roomId = uuid;
+    }
+    const que = query(collection(firebaseStore, roomId), orderBy("regDateMs"));
+    onSnapshot(que, (snapShot) => {
+      let chatList = [];
+      snapShot.forEach((doc) => {
+        chatList.push(doc.data());
+      });
+      setReceiveMs(chatList);
+    });
     setShowChat(true);
     onHide();
   };
+
+  const setRoomUUid = async (uuid) => {
+    const myRef = collection(firebaseStore, userData.uid);
+    await setDoc(doc(myRef, userUid), {
+      UUid: uuid,
+      userName,
+      userPhoto,
+      userUid,
+      lastChat: "",
+      badgeCnt: 0,
+    });
+    const userRef = collection(firebaseStore, userUid);
+    await setDoc(doc(userRef, userData.uid), {
+      UUid: uuid,
+      userName: userData.name,
+      userPhoto: userData.photoUrl,
+      userUid: userData.uid,
+      lastChat: "",
+      badgeCnt: 0,
+    });
+  };
+
   const fixProfile = () => {
     navigate("/profile_edit");
   };

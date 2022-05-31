@@ -5,7 +5,7 @@ import { Image, ListGroup } from "react-bootstrap";
 import FriendList_profile from "../component/FriendList_profile";
 import defaultUserIcon from "icon/abstract-user-flat-3.png";
 
-const FriendsSearch = ({ userData }) => {
+const FriendsSearch = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
@@ -14,6 +14,7 @@ const FriendsSearch = ({ userData }) => {
   const [userList, setUserList] = useState([]);
   const [isFriends, setIsFriends] = useState(false);
   const [userFriends, setUserFriends] = useState([]);
+  const userData = JSON.parse(localStorage.getItem("userData"));
   useEffect(() => {
     if (userData) {
       getUserData();

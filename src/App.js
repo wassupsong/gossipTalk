@@ -10,7 +10,6 @@ function App() {
   const [init, setInit] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isMobileSize, setIsMobileSize] = useState(false);
-  const [userData, setUserData] = useState({});
   const [isGetUserData, setIsGetUserData] = useState("noInit");
   const [authData, setAuthData] = useState({});
   useEffect(() => {
@@ -22,6 +21,7 @@ function App() {
         setIsLogin(true);
       } else {
         setIsLogin(false);
+        localStorage.removeItem("userData");
       }
       setInit(true);
     });
@@ -36,7 +36,7 @@ function App() {
       const data = doc(firebaseStore, "userData", authData.uid);
       onSnapshot(data, (doc) => {
         if (doc.data()) {
-          setUserData(doc.data());
+          localStorage.setItem("userData", JSON.stringify(doc.data()));
           setIsGetUserData("existData");
         } else {
           setIsGetUserData("noData");
@@ -54,17 +54,15 @@ function App() {
       setIsMobileSize(false);
     }
   };
-  console.log(userData);
+
   return (
     <>
       {init ? (
         <>
           {isMobileSize ? (
             <AppRouter
-              userData={userData}
               isLogin={isLogin}
               isGetUserData={isGetUserData}
-              setUserData={setUserData}
               authData={authData}
             />
           ) : (

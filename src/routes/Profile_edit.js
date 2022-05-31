@@ -17,8 +17,10 @@ import {
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { FaRegPlusSquare } from "react-icons/fa";
 
-const Profile_edit = ({ userData }) => {
+const Profile_edit = () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const [name, setName] = useState(userData.name);
   const [photoUrl, setPhotoUrl] = useState(userData.photoUrl);
   const [content, setContent] = useState(userData.profile_content);
@@ -79,7 +81,7 @@ const Profile_edit = ({ userData }) => {
 
   const clearFile = () => {
     setPhotoUrl("");
-    fileInput.current.value = "";
+    if (fileInput.current) fileInput.current.value = "";
   };
 
   return (
@@ -111,19 +113,7 @@ const Profile_edit = ({ userData }) => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
-              <Form.Control
-                type="file"
-                name="photoUrl"
-                onChange={fileChange}
-                accept="image/*"
-                ref={fileInput}
-              />
-            </Col>
-          </Form.Group>
-
-          {photoUrl && (
+          {photoUrl ? (
             <Form.Group as={Row} className="mb-3">
               <Col sm>
                 <Image
@@ -131,6 +121,25 @@ const Profile_edit = ({ userData }) => {
                   roundedCircle
                   className="profile_image"
                   onClick={clearFile}
+                />
+              </Col>
+            </Form.Group>
+          ) : (
+            <Form.Group as={Row} className="mb-3">
+              <Col sm>
+                <label htmlFor="input_file" className="profile_edit_image">
+                  사진을 추가해보세요
+                  <br></br>
+                  <FaRegPlusSquare />
+                </label>
+                <input
+                  id="input_file"
+                  type="file"
+                  name="photoUrl"
+                  onChange={fileChange}
+                  accept="image/*"
+                  ref={fileInput}
+                  style={{ display: "none" }}
                 />
               </Col>
             </Form.Group>

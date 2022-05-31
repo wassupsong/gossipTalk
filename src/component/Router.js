@@ -12,7 +12,7 @@ import Setting from "routes/Setting";
 import FriendsSearch from "routes/FriendsSearch";
 import Profile_edit from "routes/Profile_edit";
 
-const AppRouter = ({ userData, isLogin, isGetUserData, authData }) => {
+const AppRouter = ({ isLogin, isGetUserData, authData }) => {
   return (
     <Router>
       {isLogin && isGetUserData == "existData" && <Home_Nav />}
@@ -27,24 +27,15 @@ const AppRouter = ({ userData, isLogin, isGetUserData, authData }) => {
             {isGetUserData == "noData" ? (
               <Route path="/" element={<Profile authData={authData} />} />
             ) : (
-              <Route path="/" element={<FriendList userData={userData} />} />
+              <Route path="/" element={<FriendList />} />
             )}
 
-            <Route
-              path="/chatList"
-              element={<ChatList userData={userData} />}
-            />
+            <Route path="/chatList" element={<ChatList />} />
             <Route path="/chatRoom/:id" element={<ChatRoom />} />
-            <Route path="/etc" element={<Etc userData={userData} />} />
+            <Route path="/etc" element={<Etc />} />
             <Route path="/setting" element={<Setting />} />
-            <Route
-              path="/search"
-              element={<FriendsSearch userData={userData} />}
-            />
-            <Route
-              path="/profile_edit"
-              element={<Profile_edit userData={userData} />}
-            />
+            <Route path="/search" element={<FriendsSearch />} />
+            <Route path="/profile_edit" element={<Profile_edit />} />
           </>
         ) : (
           <Route path="/" element={<LoginForm />} />

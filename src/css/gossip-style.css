@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gugi&family=Yeon+Sung&display=swap');
+
+* {
+	font-family: 'Yeon Sung', cursive;
+	font-size: "50px"
+}
 html {
 	background-color: black;
 }
@@ -63,4 +69,14 @@ html {
 .friend_myProfile_image{
 	width : 50px;
 	height : 50px;
+}
+
+.profile_edit_image {
+	width : 200px;
+	height : 200px;
+	border-radius: 50%;
+	vertical-align: middle;
+	color : white;
+	border : 3px dotted white ;
+	padding-top: 70px;
 }

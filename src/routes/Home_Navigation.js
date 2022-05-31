@@ -18,8 +18,8 @@ const Home_Nav = () => {
     const { pathname } = location;
     let title = "";
     if (pathname === "/search") title = "뒷담친구 검색";
-    if (pathname === "/") title = "뒷담친구 목록";
-    if (pathname === "/chatList") title = "뒷담";
+    if (pathname === "/") title = "뒷담친구";
+    if (pathname === "/chatList") title = "뒷담방";
     if (pathname === "/etc") title = "기타";
     if (pathname === "/profile_edit") title = "프로필 관리";
     setNavTitle(title);
@@ -50,7 +50,7 @@ const Home_Nav = () => {
     const {
       target: { id },
     } = e;
-    if (id == "1") console.log(1);
+    if (id == "1") navigate("/profile_edit");
     if (id == "2") clickLogOut();
     setDropMenu((prev) => !prev);
   };

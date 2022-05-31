@@ -1,12 +1,21 @@
 import { firebaseStore } from "Fbase";
-import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Image, ListGroup } from "react-bootstrap";
 import FriendList_profile from "../component/FriendList_profile";
 import defaultUserIcon from "icon/abstract-user-flat-3.png";
 import ChatRoom from "component/ChatRoom";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from "firebase/firestore";
 
-const FriendList = ({ userData }) => {
+const FriendList = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
@@ -14,30 +23,23 @@ const FriendList = ({ userData }) => {
   const [userUid, setUserUid] = useState("");
   const [friends, setFriends] = useState([]);
   const [showChat, setShowChat] = useState(false);
-  const onDoubleClick = (e) => {
-    e.stopPropagation();
-    console.log(e);
-    const {
-      target: { id },
-    } = e;
-    if (id === "myprofile") {
-      setUserName(userData.name);
-      setUserPhoto(userData.photoUrl);
-      setUserContent(userData.profile_content);
-      setUserUid(userData.uid);
-      setShowDetail(true);
-    } else {
-      const {
-        target: {
-          attributes: { username, userphoto, usercontent, useruid },
-        },
-      } = e;
-      setUserName(username.value);
-      setUserPhoto(userphoto.value);
-      setUserContent(usercontent.value);
-      setUserUid(useruid.value);
-      setShowDetail(true);
-    }
+  const [roomId, setRoomId] = useState("");
+  const [receiveMs, setReceiveMs] = useState([]);
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const myProfileEvent = () => {
+    setUserName(userData.name);
+    setUserPhoto(userData.photoUrl);
+    setUserContent(userData.profile_content);
+    setUserUid(userData.uid);
+    setShowDetail(true);
+  };
+
+  const userProfileEvent = (fr) => {
+    setUserName(fr.name);
+    setUserPhoto(fr.photoUrl);
+    setUserContent(fr.profile_content);
+    setUserUid(fr.uid);
+    setShowDetail(true);
   };
 
   useEffect(() => {
@@ -64,10 +66,9 @@ const FriendList = ({ userData }) => {
           <ListGroup.Item variant="secondary">뒷담 프로필</ListGroup.Item>
           <ListGroup.Item
             action
-            onDoubleClick={onDoubleClick}
             variant="secondary"
             className="d-flex justify-content-between align-items-start"
-            id="myprofile"
+            onDoubleClick={myProfileEvent}
           >
             <div className="friend_myProfile">
               <Image
@@ -85,15 +86,10 @@ const FriendList = ({ userData }) => {
           {friends.map((fr) => (
             <ListGroup.Item
               action
-              onDoubleClick={onDoubleClick}
+              onDoubleClick={() => userProfileEvent(fr)}
               variant="secondary"
               className="d-flex justify-content-between align-items-start"
-              username={fr.name}
-              userphoto={fr.photoUrl}
-              usercontent={fr.profile_content}
-              useruid={fr.uid}
               key={fr.uid}
-              id="userProfile"
             >
               <div className="friend_myProfile">
                 <Image
@@ -121,6 +117,8 @@ const FriendList = ({ userData }) => {
         userData={userData}
         onHide={() => setShowDetail(false)}
         setShowChat={setShowChat}
+        setRoomId={setRoomId}
+        setReceiveMs={setReceiveMs}
       />
 
       <ChatRoom
@@ -132,6 +130,9 @@ const FriendList = ({ userData }) => {
         userUid={userUid}
         isFriends={true}
         userData={userData}
+        roomId={roomId}
+        setRoomId={setRoomId}
+        receiveMs={receiveMs}
       />
     </>
   );
