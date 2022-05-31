@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/gossiptalk/static/css/main.c3248714.css",
+    "main.js": "/gossiptalk/static/js/main.54baaf66.js",
+    "static/media/abstract-user-flat-3.png": "/gossiptalk/static/media/abstract-user-flat-3.5e5c8245054a82e19895.png",
+    "index.html": "/gossiptalk/index.html",
+    "main.c3248714.css.map": "/gossiptalk/static/css/main.c3248714.css.map",
+    "main.54baaf66.js.map": "/gossiptalk/static/js/main.54baaf66.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3248714.css",
+    "static/js/main.54baaf66.js"
+  ]
+}
