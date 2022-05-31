@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/gossipTalk/static/css/main.c3248714.css",
-    "main.js": "/gossipTalk/static/js/main.8adbd53c.js",
+    "main.js": "/gossipTalk/static/js/main.8d5ffc80.js",
     "static/media/abstract-user-flat-3.png": "/gossipTalk/static/media/abstract-user-flat-3.5e5c8245054a82e19895.png",
     "index.html": "/gossipTalk/index.html",
     "main.c3248714.css.map": "/gossipTalk/static/css/main.c3248714.css.map",
-    "main.8adbd53c.js.map": "/gossipTalk/static/js/main.8adbd53c.js.map"
+    "main.8d5ffc80.js.map": "/gossipTalk/static/js/main.8d5ffc80.js.map"
   },
   "entrypoints": [
     "static/css/main.c3248714.css",
-    "static/js/main.8adbd53c.js"
+    "static/js/main.8d5ffc80.js"
   ]
 }
