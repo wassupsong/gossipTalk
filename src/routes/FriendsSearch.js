@@ -27,11 +27,15 @@ const FriendsSearch = () => {
         attributes: { username, userphoto, usercontent, useruid, friends },
       },
     } = e;
-    if (userData.friends.indexOf(useruid.value) > -1) {
-      setIsFriends(true);
-    } else {
-      setIsFriends(false);
-    }
+    userData.friends.map((item) => {
+      if (item.uid === useruid.value) {
+        setIsFriends(true);
+        return false;
+      } else {
+        setIsFriends(false);
+      }
+    });
+
     setUserName(username.value);
     setUserPhoto(userphoto.value);
     setUserContent(usercontent.value);

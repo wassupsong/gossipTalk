@@ -5,7 +5,6 @@ import ChatList from "routes/ChatList";
 import Etc from "routes/Etc";
 import LoginForm from "routes/LoginForm";
 import Profile from "routes/Profile";
-import ChatRoom from "./ChatRoom";
 import { Spinner } from "react-bootstrap";
 import Setting from "routes/Setting";
 import FriendsSearch from "routes/FriendsSearch";
@@ -15,7 +14,7 @@ const AppRouter = ({ isLogin, isGetUserData, authData }) => {
   return (
     <Router>
       {isLogin && isGetUserData == "existData" && <Home_Nav />}
-      {isGetUserData == "noInit" ? (
+      {isLogin && isGetUserData == "noInit" ? (
         <div className="spinner">
           <Spinner animation="border" role="status" variant="light" />
         </div>
@@ -30,7 +29,6 @@ const AppRouter = ({ isLogin, isGetUserData, authData }) => {
               )}
 
               <Route path="/chatList" element={<ChatList />} />
-              <Route path="/chatRoom/:id" element={<ChatRoom />} />
               <Route path="/etc" element={<Etc />} />
               <Route path="/setting" element={<Setting />} />
               <Route path="/search" element={<FriendsSearch />} />

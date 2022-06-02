@@ -38,10 +38,19 @@ const FriendList_profile = ({
         photoUrl: userData.photoUrl,
         uid: userData.uid,
         profile_content: userData.profile_content,
-        friends: [...userData.friends, userUid],
+        friends: [
+          ...userData.friends,
+          {
+            name: userName,
+            uid: userUid,
+            photoUrl: userPhoto,
+            profile_content: userContent,
+          },
+        ],
       });
 
-      alert("친구 추가가 완료되었습니다.");
+      alert("친구 추가 되었습니다.");
+      onHide();
     } catch (error) {
       console.log(error.message);
     }

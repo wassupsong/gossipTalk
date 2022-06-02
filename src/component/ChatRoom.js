@@ -91,7 +91,7 @@ const ChatRoom = ({
       <Modal.Header style={{ padding: "10px" }} closeButton>
         <Modal.Title style={{ fontWeight: "bold" }}>
           <Image
-            src={userData.photoUrl ? userData.photoUrl : defaultUserIcon}
+            src={userPhoto ? userPhoto : defaultUserIcon}
             roundedCircle
             className="friend_myProfile_image"
             style={{ marginRight: "10px" }}

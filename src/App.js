@@ -20,19 +20,11 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthData(user);
-        const data = doc(firebaseStore, "userData", user.uid);
         setIsLogin(true);
-        onSnapshot(data, (doc) => {
-          if (doc.data()) {
-            localStorage.setItem("userData", JSON.stringify(doc.data()));
-            setIsGetUserData("existData");
-          } else {
-            setIsGetUserData("noData");
-          }
-        });
       } else {
         localStorage.removeItem("userData");
         setIsLogin(false);
+        setIsGetUserData("noInit");
       }
       setInit(true);
     });
@@ -47,6 +39,15 @@ function App() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
+      const data = doc(firebaseStore, "userData", authData.uid);
+      onSnapshot(data, (doc) => {
+        if (doc.data()) {
+          localStorage.setItem("userData", JSON.stringify(doc.data()));
+          setIsGetUserData("existData");
+        } else {
+          setIsGetUserData("noData");
+        }
+      });
     }
   }, [authData]);
 

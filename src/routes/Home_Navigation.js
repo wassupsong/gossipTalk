@@ -1,5 +1,5 @@
 import { Container, Navbar, Row, Col, Button, Dropdown } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   FaRegSun,
   FaComment,
@@ -27,7 +27,6 @@ const Home_Nav = () => {
   const clickLogOut = () => {
     const auth = getAuth();
     signOut(auth);
-    window.location.replace("/gossipTalk");
   };
   const moveToTab = (e) => {
     const {

@@ -1,19 +1,9 @@
 import { firebaseStore } from "Fbase";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Image, ListGroup } from "react-bootstrap";
 import FriendList_profile from "../component/FriendList_profile";
 import defaultUserIcon from "icon/abstract-user-flat-3.png";
 import ChatRoom from "component/ChatRoom";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-  orderBy,
-  query,
-  setDoc,
-} from "firebase/firestore";
 
 const FriendList = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -23,7 +13,6 @@ const FriendList = () => {
   const [userPhoto, setUserPhoto] = useState("");
   const [userContent, setUserContent] = useState("");
   const [userUid, setUserUid] = useState("");
-  const [friends, setFriends] = useState([]);
   const [showChat, setShowChat] = useState(false);
   const [roomId, setRoomId] = useState("");
   const [receiveMs, setReceiveMs] = useState([]);
@@ -42,23 +31,6 @@ const FriendList = () => {
     setUserContent(fr.profile_content);
     setUserUid(fr.uid);
     setShowDetail(true);
-  };
-
-  useEffect(() => {
-    if (userData.friends) {
-      getFriendsData();
-    }
-  }, [userData.friends]);
-
-  const getFriendsData = async () => {
-    let friendsList = [];
-    const promise = userData.friends.map(async (value) => {
-      const docRef = doc(firebaseStore, "userData", value);
-      const docSnap = await getDoc(docRef);
-      friendsList.push(docSnap.data());
-    });
-    await Promise.all(promise);
-    setFriends(friendsList);
   };
 
   return (
@@ -85,7 +57,7 @@ const FriendList = () => {
             </div>
           </ListGroup.Item>
           <ListGroup.Item variant="secondary">뒷담친구</ListGroup.Item>
-          {friends.map((fr) => (
+          {userData.friends.map((fr) => (
             <ListGroup.Item
               action
               onDoubleClick={() => userProfileEvent(fr)}

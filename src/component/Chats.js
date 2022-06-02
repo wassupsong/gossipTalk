@@ -1,4 +1,5 @@
 import { Card, Col, Image, Row } from "react-bootstrap";
+import defaultUserIcon from "icon/abstract-user-flat-3.png";
 
 const Chats = ({ message, regDate, senderName, senderPhoto, senderId }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -12,7 +13,7 @@ const Chats = ({ message, regDate, senderName, senderPhoto, senderId }) => {
             style={{ textAlign: "left", color: "white" }}
           >
             <Image
-              src={senderPhoto}
+              src={senderPhoto ? senderPhoto : defaultUserIcon}
               style={{ width: "30px", height: "30px", marginBottom: "10px" }}
               roundedCircle
             />
