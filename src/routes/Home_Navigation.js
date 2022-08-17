@@ -6,6 +6,8 @@ import {
   FaSistrix,
   FaUserFriends,
   FaEllipsisH,
+  FaSignOutAlt,
+  FaUserAlt,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
@@ -17,11 +19,23 @@ const Home_Nav = () => {
   useEffect(() => {
     const { pathname } = location;
     let title = "";
-    if (pathname === "/search") title = "뒷담친구 검색";
-    if (pathname === "/") title = "뒷담친구";
-    if (pathname === "/chatList") title = "뒷담방";
-    if (pathname === "/etc") title = "기타";
-    if (pathname === "/profile_edit") title = "프로필 관리";
+    switch (pathname) {
+      case "/search":
+        title = "뒷담친구 검색";
+        break;
+      case "/":
+        title = "뒷담친구";
+        break;
+      case "/chatList":
+        title = "뒷담방";
+        break;
+      case "/etc":
+        title = "기타";
+        break;
+      case "/profile_edit":
+        title = "프로필 관리";
+        break;
+    }
     setNavTitle(title);
   }, [location]);
   const clickLogOut = () => {
@@ -33,16 +47,22 @@ const Home_Nav = () => {
       target: { id },
     } = e;
 
-    if (id === "friendList") {
-      navigate("/", { replace: true });
-    } else if (id === "chatList") {
-      navigate("/chatList", { replace: true });
-    } else if (id === "etc") {
-      navigate("/etc", { replace: true });
-    } else if (id === "setting") {
-      navigate("/setting");
-    } else if (id === "search") {
-      navigate("/search");
+    switch (id) {
+      case "friendList":
+        navigate("/", { replace: true });
+        break;
+      case "chatList":
+        navigate("/chatList", { replace: true });
+        break;
+      case "etc":
+        navigate("/etc", { replace: true });
+        break;
+      case "setting":
+        navigate("/setting");
+        break;
+      case "search":
+        navigate("/search");
+        break;
     }
   };
   const dropMenuClick = (e) => {
@@ -78,11 +98,11 @@ const Home_Nav = () => {
             </Button>
             <Dropdown.Menu show={dropMenu} align="end" rootCloseEvent="click">
               <Dropdown.Item id="1" onClick={dropMenuClick}>
-                뒷담 프로필
+                <FaUserAlt /> 뒷담 프로필
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item id="2" onClick={dropMenuClick}>
-                뒷담 그만두기
+                <FaSignOutAlt /> 뒷담 그만두기
               </Dropdown.Item>
             </Dropdown.Menu>
           </Navbar.Collapse>

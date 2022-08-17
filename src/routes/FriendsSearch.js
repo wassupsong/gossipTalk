@@ -21,6 +21,7 @@ const FriendsSearch = () => {
     }
   }, [userData]);
 
+  //검색된 유저 프로필 Modal 세팅
   const onDoubleClick = (e) => {
     const {
       target: {
@@ -44,6 +45,7 @@ const FriendsSearch = () => {
     setShowDetail(true);
   };
 
+  //모든 유저 데이터 조회(아직 검색기능 x)
   const getUserData = async () => {
     let users = [];
     const q = query(

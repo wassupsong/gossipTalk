@@ -17,6 +17,8 @@ const ChatRoom = ({
     scrollToBottom();
   }, []);
   const [sendMs, setSendMs] = useState("");
+
+  //useRef 로 div 위치 파악 후 메세지 보낼 때 마다 하단 고정
   const messageBoxRef = useRef();
   const userData = JSON.parse(localStorage.getItem("userData"));
   const scrollToBottom = () => {
@@ -24,6 +26,8 @@ const ChatRoom = ({
       messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
     }
   };
+
+  //시간 format
   const formatAMPM = (date) => {
     let hours = date.getHours();
     let minutes = date.getMinutes();
@@ -35,12 +39,15 @@ const ChatRoom = ({
     return strTime;
   };
 
+  //input 감지
   const inputChange = (e) => {
     const {
       target: { value },
     } = e;
     setSendMs(value);
   };
+
+  // 메세지 전송 event
   const sendMessage = async (e) => {
     e.preventDefault();
     const add = await addDoc(collection(firebaseStore, roomId), {
@@ -75,6 +82,7 @@ const ChatRoom = ({
     scrollToBottom();
   };
 
+  //enter 누르면 submit 시켜주기
   const pressEnter = (e) => {
     if (window.event.keyCode == 13) sendMessage(e);
   };

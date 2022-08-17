@@ -5,6 +5,7 @@ const Chats = ({ message, regDate, senderName, senderPhoto, senderId }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   return (
     <>
+      {/* 로그인 된 uid 와 메세지 보낸 user의 uid 값 체크 */}
       {userData.uid !== senderId ? (
         <Row style={{ marginTop: "10px" }}>
           <Col xs={{ order: "last" }}></Col>

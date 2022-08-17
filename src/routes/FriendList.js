@@ -17,6 +17,7 @@ const FriendList = () => {
   const [roomId, setRoomId] = useState("");
   const [receiveMs, setReceiveMs] = useState([]);
 
+  // 더블 클릭 시, 각 데이터 세팅
   const myProfileEvent = () => {
     setUserName(userData.name);
     setUserPhoto(userData.photoUrl);
@@ -81,6 +82,7 @@ const FriendList = () => {
         </ListGroup>
       </div>
 
+      {/* 프로필 Modal */}
       <FriendList_profile
         show={showDetail}
         userName={userName}
@@ -94,7 +96,7 @@ const FriendList = () => {
         setRoomId={setRoomId}
         setReceiveMs={setReceiveMs}
       />
-
+      {/* 채팅방 Modal */}
       <ChatRoom
         show={showChat}
         onHide={() => setShowChat(false)}

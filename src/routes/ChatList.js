@@ -23,6 +23,7 @@ const ChatList = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   useEffect(() => {
     const que = query(collection(firebaseStore, userData.uid));
+    //채팅방 리스트 실시간 업데이트 조회
     onSnapshot(que, (snapShot) => {
       const list = [];
       snapShot.forEach((doc) => {
@@ -32,11 +33,15 @@ const ChatList = () => {
     });
   }, []);
 
+  /*
+    채팅방 더블클릭 시, Chats 로 넘길 데이터 세팅
+  */
   const onDoubleClick = (item) => {
     const que = query(
       collection(firebaseStore, item.UUid),
       orderBy("regDateMs")
     );
+    //더블 클릭 된 채팅방의 uuid로 채팅목록 실시간 업데이트 조회
     onSnapshot(que, (snapShot) => {
       let chats = [];
       snapShot.forEach((doc) => {
